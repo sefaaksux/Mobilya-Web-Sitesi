@@ -22,63 +22,57 @@
     </style>
 }
 
-
-<div class="container" style="margin-top: 90px;">
-    <div class="row">
-        @foreach (var product in Model)
-        {
-            <div class="col-md-3">
-                <div class="card product-card">
-                    @{
-                        if (product.Images != null)
-                        {
-                            <img src="@Url.Content(product.Images.FirstOrDefault()?.Url)" class="card-img-top product-image" alt="@product.Name" />
-                        }
-                    }
-                    
-                    <div class="card-body">
-
-                        @{
-                            if(product.Name != null)
-                            {
-                                <h5 class="card-title">@product.Name</h5>
-                            }
-
-                        }
-                        
-
-
-                            @{
-                                
-                                if(product.Description != null)
+        <div class="container" style="margin-top: 90px;">
+            @if (Model == null || !Model.Any())
+            {
+                <div class="noProduct" style="text-align: center; background-color: rgb(215, 246, 250);  margin-bottom: 250px; padding: 50px;
+                border-radius: 5%;">
+                    <h2>Ürünler pek yakında yüklenecektir..</h2>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    @foreach (var product in Model)
+                    {
+                        <div class="col-md-3">
+                            <div class="card product-card">
+                                @if (product.Images != null)
+                                {
+                                    <img src="@Url.Content(product.Images.FirstOrDefault()?.Url)" class="card-img-top product-image" alt="@product.Name" />
+                                }
+        
+                                <div class="card-body">
+                                    @if (product.Name != null)
+                                    {
+                                        <h5 class="card-title">@product.Name</h5>
+                                    }
+        
+                                    @if (product.Description != null)
                                     {
                                         if (product.Description.Length > 20)
-                                                {
-                                                    <p class="card-text">@Html.Raw(product.Description.Substring(0, 20))...</p>
-                                                }
-                                                else
-                                                {
-                                                    <p class="card-text">@product.Description</p>
-                                                }
+                                        {
+                                            <p class="card-text">@Html.Raw(product.Description.Substring(0, 20))...</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="card-text">@product.Description</p>
+                                        }
                                     }
-                                                
-                                }
-
-                                @{
-                                    if(product.Amount != null)
+        
+                                    @if (product.Amount != null)
                                     {
                                         <p class="card-text"><strong>@product.Amount</strong></p>
                                     }
-
-                                }
-                        
-                        <a href="#" class="btn btn-primary">İncele</a>
-                    </div>
+        
+                                    <a asp-controller="Product" asp-action="Details" asp-route-id="@product.ProductId" class="btn btn-primary">İncele</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
-            </div>
-        }
-    </div>
-</div>
+            }
+        </div>
 
 
 @section script {

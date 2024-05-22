@@ -694,6 +694,10 @@ ul.main-nav.show-it {
 
 @media (max-width: 1200px){
 
+  #contactMap #mymap iframe{
+    width: 400px;
+    height: 400px;
+  }
   .container .card-containerr{
     flex-direction:column;   
     justify-content: center;

@@ -55,10 +55,15 @@ public class AdminController : Controller
         {
             
             if(Giris == "true")
-            {        
-                 ViewBag.MasaCount = _context.products.Where(x=>x.CategoryId == 1).Count();
-                 ViewBag.SandalyeCount = _context.products.Where(x=>x.CategoryId == 2).Count();
-                 return View();
+            {    
+                 var viewModel = new CountViewModel
+                    {
+                        MasaCount =await _context.products.Where(x => x.CategoryId == 1).CountAsync(),
+                        SandalyeCount = await _context.products.Where(x => x.CategoryId == 2).CountAsync(),
+                       
+                    };
+                 
+                 return View(viewModel);
             }else{
                 return RedirectToAction("Index");
             }
